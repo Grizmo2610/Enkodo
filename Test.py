@@ -25,6 +25,7 @@ if __name__ == "__main__":
     cipherText = Encrypt.encoding(msg, publicKey)
     # print("Cipher text:", cipherText)  # print ciphertext
     print('Encrypt time:', time.time() - start)
+    Encrypt.saveData(cipherText)
 
     # Save key
     Key.saveKey(publicKey, privateKey)

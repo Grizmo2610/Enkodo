@@ -74,6 +74,6 @@ def saveData(text: list[int]) -> None:
 
     with open('data\ciphertext.txt' , "w", encoding= "utf-8") as f:
         for i in range(len(text)):
-            f.write("".join(text[i]))
+            f.write(str(text[i]))
             if i != len(text) - 1:
                 f.write("\n")
