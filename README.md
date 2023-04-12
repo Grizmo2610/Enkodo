@@ -26,7 +26,10 @@ Sau khi có cặp khóa người sử dụng sẽ dung `public key` để mã h�
 
 
 ## Release History
-* 0.1.0 - 12 Apirl 2023
+* 0.1.1 - 12 Apỉl 2023
+   * Sửa đổi `saveData` trong `Encrypt.py`
+   * Sửa đổi `Test.py` - Thêm lưu dữ liệu vào file `ciphertext.txt`
+* 0.1.0 - 11 Apirl 2023
     * Phát hành và sử dụng được
 * 0.0.1 - 04 Apirl 2023
     * Đang trong quá trình phát triển
