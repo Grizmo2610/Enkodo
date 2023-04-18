@@ -9,27 +9,35 @@ Sau khi có cặp khóa người sử dụng sẽ dung `public key` để mã h�
     * decypt(cipherText, privateKey): Trả về đoạn văn bản đã được giải mã
 - ***Encrypt.py***: Chứa các hàm để mã hóa
     * encoding(message, publicKey): Mã hóa `message` bằng `publicKey`
-    * crypt(text): Trả về đoạn văn bản sau khi được mã hóa
+    * toText(number): Chuyển số thành một văn bản
+    * crypt(text): Chuyển danh sách chứa các số nguyên thành danh sách chứa đoạn `text` đặc biệt
     * saveData(text): Lưu dữ liệu vào file có đường dẫn `data\ciphertext.txt`
 - ***FindingKey.py***: Chứa các hàm để tìm `private key`
     * primeFactor(number): Trả về mảng chứa các ước số nguyên tố của `number`
     * findPrivateKey(publicKey): Tìm và trả về `private key` dựa trên `public key` được chuyền vào
 - ***Key.py*** : Chứa các hàm để tạo khóa
-    * gcd(a, b): Trả về UCLN của 2 số a và b
+    * gcd(a, b): Trả về UCLN của 2 số `a` và `b`
     * isPrime(number): Kiểm tra xem `number` số có phải số nguyên tố không
-    * nextPrimt(number): Trả về số nguyên số lớn hơn gần nhất `number`
+    * nextPrime(number): Trả về số nguyên số lớn hơn gần nhất `number`
+    * randomNumber (bits): Trả về số ngẫu nhiên có độ dài `bits`
     * generateKey(p, q): Trả về cặp `key`
-    * randomKey(start, end): Trả về cặp `key` với tham số `p` và `q` được lấy ngẫu nhiên trong khoảng [start, end].
+    * randomKey(bits): Trả về cặp `key` với tham số `p` và `q` lấy ngẫu nhiên với độ dài `bits`.
     * saveKey(publicKey, privateKey): Lưu các `key` vào trong file `data\key.json`
     * getKey(path): Trả về cặp `key` được lấy ra từ file có đường dẫn `path`
 - ***Test.py***: Test chương trình
 
 
 ## Release History
-* 0.1.1 - 12 Apỉl 2023
-   * Sửa đổi `saveData` trong `Encrypt.py`
-   * Sửa đổi `Test.py` - Thêm lưu dữ liệu vào file `ciphertext.txt`
-* 0.1.0 - 11 Apirl 2023
+* 0.1.2 - 18 Apỉl 2023
+    Sửa đổi cách tạo `key` ngẫu nhiên
+    Thay đổi hàm crypt từ in ra các chuỗi số thành in ra các chuỗi gồm các ký tự
+    Ghi kết quả của `crypt` sang file `data\out.txt`
+    Thêm phương thức `toText` để chuyển số thành đoạn `text` đặc biệt
+    
+* 0.1.1 - 12 Apirl 2023
+    Sửa đổi `saveData` trong `Encrypt.py`
+    Sửa đổi `Test.py` - Thêm lưu dữ liệu vào file `ciphertext.txt`
+* 0.1.0 - 12 Apirl 2023
     * Phát hành và sử dụng được
 * 0.0.1 - 04 Apirl 2023
     * Đang trong quá trình phát triển

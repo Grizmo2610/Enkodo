@@ -26,6 +26,9 @@ def decypt(cipherText: list[str], privateKey: tuple[int] = ...) -> str:
             publicKey, (n, d) = Key.randomKey()
     else:
         n, d = privateKey
-    return ''.join([chr(pow(int(char), d, n)) for char in cipherText if char != ''])
-    
 
+    result = []
+    for char in cipherText:
+        print(pow(char, d, n))
+        result.append(chr(pow(char, d, n)))
+    return ''.join(result)

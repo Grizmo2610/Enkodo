@@ -32,24 +32,38 @@ def encoding(message: str, publicKey: tuple[int] = ...) -> list[int]:
 
     return [pow(ord(i), e, n) for i in message]
 
-def crypt(text: list[int]) -> str:
+def toText(number: int):
     """
-    The provided function takes a list of integers text as input and returns a string containing 
-    the integers separated by spaces.
+    This method convert an integer number in to a string
 
-    The function first applies the map function to the text list, which applies the str function to
-    each integer in the list, converting them to strings.
-
-    The resulting list of strings is then passed to the join method of the string " ", which joins 
-    the strings together with spaces as separators.
-
-    Parameter:
-        text (list[int]): list of integers
-
-    Return (str): the resulting string.
+    Parameters:
+        number (int): an integer to convert
+    
+    Return: str - text have been converted
     """
-    return ' '.join(list(map(str, text)))
+    result = ""
+    s = str(number)
+    for i in range(0, len(s), 3):
+        num = int(s[i:i+3])
+        if num >= 127 or num < 35:
+            result += '\\{:03d}'.format(num)
+        else:
+            result += chr(num)   
+    return result
 
+def crypt(text:list[int]):
+    """
+    This method convert all element in a list to a text
+
+    Parameters:
+        text (list[int]): list number to convert
+
+    Return: list[str] - list have converted
+    """
+    result = []
+    for i in text:
+        result.append(toText(i))
+    return result
 
 def saveData(text: list[int]) -> None:
     """
