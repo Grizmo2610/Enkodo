@@ -39,18 +39,25 @@ Sau khi có cặp khóa người sử dụng sẽ dung `public key` để mã h�
 ## Release History
 * 0.2.0 - 05 May 2023
     Thay đổi cách kiểm tra số nguyên tố
+    
     Tách tạo số nguyên tố và kiểm tra số nguyên tố sang 1 file khác
+    
     Xóa bỏ chương trình tìm Private Key khi biết Public Key
 
 * 0.1.2 - 18 Apirl 2023
     Sửa đổi cách tạo `key` ngẫu nhiên
+    
     Thay đổi hàm crypt từ in ra các chuỗi số thành in ra các chuỗi gồm các ký tự
+    
     Ghi kết quả của `crypt` sang file `data\out.txt`
+    
     Thêm phương thức `toText` để chuyển số thành đoạn `text` đặc biệt
     
 * 0.1.1 - 12 Apirl 2023
     Sửa đổi `saveData` trong `Encrypt.py`
+    
     Sửa đổi `Test.py` - Thêm lưu dữ liệu vào file `ciphertext.txt`
+    
 * 0.1.0 - 12 Apirl 2023
     * Phát hành và sử dụng được
 * 0.0.1 - 04 Apirl 2023
