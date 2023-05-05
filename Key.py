@@ -27,6 +27,9 @@ def generateKey(p: int, q: int) -> tuple[tuple[int, int], tuple[int, int]]:
 
     Return: tuple(tuple(int, int), tuple(int, int)) - pair of key (public key, private key)
     """
+    p = GetPrime.nextPrime(p)
+    q = GetPrime.nextPrime(q)
+
     euler = (p - 1) * (q - 1)
     carmichael = euler // gcd(p - 1, q - 1)
     n = p * q

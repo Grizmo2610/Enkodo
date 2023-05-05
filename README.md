@@ -19,6 +19,7 @@ Sau khi có cặp khóa người sử dụng sẽ dung `public key` để mã h�
     * isPrime(number): Kiểm tra xem số `number` có phải số nguyên tố không?
     * getNumer(bits): Tạo 1 số nguyên tố ngẫu nhiên có độ dài `bits`
     * savePrime(p, q): cặp số nguyên tố được tạo ngẫu nhiên `p`, `q` vào file `data\PrimeNumber.txt`
+    * nextPrime(number): Trả về số nguyên tố lớn hơn gần nhất với `number`
     
 - ***Key.py*** : Chứa các hàm để tạo khóa
     * gcd(a, b): Trả về UCLN của 2 số `a` và `b`
@@ -37,6 +38,10 @@ Sau khi có cặp khóa người sử dụng sẽ dung `public key` để mã h�
 
 
 ## Release History
+* 0.2.1 - 05 May 2023:
+
+    Thêm kiểm tra và lấy số nguyên tố gần nhất với p và q khi p và q được truyền vào không phải số nguyên tố
+
 * 0.2.0 - 05 May 2023:
 
     Thay đổi cách kiểm tra số nguyên tố
@@ -63,10 +68,10 @@ Sau khi có cặp khóa người sử dụng sẽ dung `public key` để mã h�
     
 * 0.1.0 - 12 Apirl 2023:
 
-    * Phát hành và sử dụng được
+    Phát hành và sử dụng được
 * 0.0.1 - 04 Apirl 2023
 
-    * Đang trong quá trình phát triển
+    Đang trong quá trình phát triển
 
 ## Author
 

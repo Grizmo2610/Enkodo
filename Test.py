@@ -6,7 +6,7 @@ import time
 if __name__ == "__main__":
     start = time.time()
     # Generate pair of key
-    publicKey, privateKey = Key.randomKey(1024)
+    publicKey, privateKey = Key.randomKey(1024 * 8)
     print('Generate key time:', time.time() - start)
 
     # message

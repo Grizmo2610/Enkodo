@@ -28,6 +28,20 @@ def isPrime(number: int) -> bool:
     return PrimeTest.Preprocessor(number) and PrimeTest.fermat(number, 20) and PrimeTest.millerRabin(number, 20)
 
 
+def nextPrime(number: int):
+    """
+    This function take an number and return a prime number which nearest and bigger than number
+
+    Parameter: 
+        number (int): - an integer number
+
+    Return (int): - a prime number
+    """
+
+    while not isPrime(number):
+        number += 2
+    return number
+
 def getPrime(bits: int = 1024) -> int:
     """
     This method is used to generate a random prime number with the length of `bits`
@@ -38,9 +52,8 @@ def getPrime(bits: int = 1024) -> int:
     Return: (int) - random prime number with the length of bits
     """
     number = randomNumber(bits)
-    while not isPrime(number):
-        number += 2
-    return number
+
+    return nextPrime(number)
 
 
 def savePrime(p: int, q: int) -> None:
