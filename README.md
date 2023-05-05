@@ -7,28 +7,42 @@ Sau khi có cặp khóa người sử dụng sẽ dung `public key` để mã h�
 ## How It Work
 - ***Decrypt.py***: Chứa các hàm để giải mã
     * decypt(cipherText, privateKey): Trả về đoạn văn bản đã được giải mã
+
 - ***Encrypt.py***: Chứa các hàm để mã hóa
     * encoding(message, publicKey): Mã hóa `message` bằng `publicKey`
     * toText(number): Chuyển số thành một văn bản
     * crypt(text): Chuyển danh sách chứa các số nguyên thành danh sách chứa đoạn `text` đặc biệt
     * saveData(text): Lưu dữ liệu vào file có đường dẫn `data\ciphertext.txt`
-- ***FindingKey.py***: Chứa các hàm để tìm `private key`
-    * primeFactor(number): Trả về mảng chứa các ước số nguyên tố của `number`
-    * findPrivateKey(publicKey): Tìm và trả về `private key` dựa trên `public key` được chuyền vào
+
+- ***GetPrime.py***: Chứa các phương thức để sinh ra số nguyên tố ngẫu nhiên có độ dài `bits`
+    * randomNumber (bits): Trả về số ngẫu nhiên có độ dài `bits`
+    * isPrime(number): Kiểm tra xem số `number` có phải số nguyên tố không?
+    * getNumer(bits): Tạo 1 số nguyên tố ngẫu nhiên có độ dài `bits`
+    * savePrime(p, q): cặp số nguyên tố được tạo ngẫu nhiên `p`, `q` vào file `data\PrimeNumber.txt`
+    
 - ***Key.py*** : Chứa các hàm để tạo khóa
     * gcd(a, b): Trả về UCLN của 2 số `a` và `b`
-    * isPrime(number): Kiểm tra xem `number` số có phải số nguyên tố không
-    * nextPrime(number): Trả về số nguyên số lớn hơn gần nhất `number`
-    * randomNumber (bits): Trả về số ngẫu nhiên có độ dài `bits`
     * generateKey(p, q): Trả về cặp `key`
     * randomKey(bits): Trả về cặp `key` với tham số `p` và `q` lấy ngẫu nhiên với độ dài `bits`.
     * saveKey(publicKey, privateKey): Lưu các `key` vào trong file `data\key.json`
     * getKey(path): Trả về cặp `key` được lấy ra từ file có đường dẫn `path`
+
+- ***PrimeTest.py***: Chứa các phương thức kiểm tra xem một số có thể là số nguyên tố không
+    *  PRIMES: list[int] - Danh sách một số số nguyên tố nhỏ
+    *  Preprocessor(number): Kiểm tra xem số nguyên `number` có phải số nguyên tố không bằng cách kiểm tra xem số `number` có phải bội của các 
+    *  fermat(number, times): Kiểm tra xem số nguyên `number` có phải số nguyên tố không bằng sử dụng thuật toán Fermat với số lần lặp là `times`
+    *  check(prime, number, n, s): Hỗ trợ phương thức `millerRobin` kiểm tra xem số `number` có phải số nguyên tố hay không
+    *  millerRobin(number, time): kiểm tra xem số `number` có phải số nguyên tố hay không sử dụng thuật toán Miller - Robin
 - ***Test.py***: Test chương trình
 
 
 ## Release History
-* 0.1.2 - 18 Apỉl 2023
+* 0.2.0 - 05 May 2023
+    Thay đổi cách kiểm tra số nguyên tố
+    Tách tạo số nguyên tố và kiểm tra số nguyên tố sang 1 file khác
+    Xóa bỏ chương trình tìm Private Key khi biết Public Key
+
+* 0.1.2 - 18 Apirl 2023
     Sửa đổi cách tạo `key` ngẫu nhiên
     Thay đổi hàm crypt từ in ra các chuỗi số thành in ra các chuỗi gồm các ký tự
     Ghi kết quả của `crypt` sang file `data\out.txt`
@@ -54,10 +68,10 @@ Nhập vào 2 số p và q, nếu là số nguyên tố sẽ là nhanh nhất, n
 
 ở trong test này:
 ```
-p = 163799160197134459132100397031692924582140521143395065308165662909921731475492881461885714198763447790540722189270461047716065749053243729458406978243702676245271139995501580688628076737625444142578429466339861368858551501197567226430703695824931148294023468989931292056209256389858704308853423367966743482191
-q = 149303830103537302718331149637557961636628297749789399546261072665768777045020575638219088388062299505276053863200809202577104436887509450785219783246599794655893290094438596385699374460820733662284252500585022896903027767819107178048857396922447758961077716916382851972496676264274467387771873501935840755741
+p = 133365637624242586918822851403653634640620654799419223379043582833544248436567028975731385362443589198243595240691580232100430124098249821031239758799294184009921715906706638633024743149616568492877518464422411218652102130776860520735535136264246184101340256914011100970808161844534343046647779188742592638719
+q = 120562766858326550164222008573849601284998295071491737099375871140381729729534205690919453526991554492784464480380399284710350982389262461422499623980393429637422776159863292111303506657674185293126360612776985616313152633447119634174978867391364495675068709128495802973214827171177514168976037765110891247561
 ```
 
 `p` và `q` là 2 số nguyên tố đủ lớn để làm cho việc bẻ khóa trở nên khó khăn hơn. Văn bản mã hóa toàn bộ là tiếng anh và được lưu trữ trong file `data\PlainText.txt`
 
-![Example 1](img/Example.png)
+![Example 1](img/Test.png)
