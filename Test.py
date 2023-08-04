@@ -6,7 +6,7 @@ import time
 if __name__ == "__main__":
     start = time.time()
     # Generate pair of key
-    publicKey, privateKey = Key.randomKey(1024 * 8)
+    publicKey, privateKey = Key.randomKey(1024)
     print('Generate key time:', time.time() - start)
 
     # message
@@ -18,11 +18,6 @@ if __name__ == "__main__":
     # Encrypt message
     cipher = Encrypt.encoding(msg, publicKey)
     print('Encrypt time:', time.time() - start)
-
-    Encrypt.saveData(cipher)
-
-    # Save key
-    Key.saveKey(publicKey, privateKey)
 
     # Decrypt cipher text
     start = time.time()

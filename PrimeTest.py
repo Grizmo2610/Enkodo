@@ -86,3 +86,15 @@ def millerRabin(number: int, time: int):
         if not check(prime, number, n, s):
             return False
     return True
+
+def isPrime(number: int) -> bool:
+    """
+    This method takes an integer input number and returns True if number is a prime number and False 
+    if number is not a prime number.
+    
+    Parameter:
+			number (int): an integer
+    
+    Returns: (bool) - number is a prime number or not
+    """
+    return Preprocessor(number) and fermat(number, 20) and millerRabin(number, 20)

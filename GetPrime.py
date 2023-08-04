@@ -15,18 +15,6 @@ def randomNumber(bits: int = 1024):
     number = number | 1
     return number
 
-def isPrime(number: int) -> bool:
-    """
-    This method takes an integer input number and returns True if number is a prime number and False 
-    if number is not a prime number.
-    
-    Parameter:
-			number (int): an integer
-    
-    Returns: (bool) - number is a prime number or not
-    """
-    return PrimeTest.Preprocessor(number) and PrimeTest.fermat(number, 20) and PrimeTest.millerRabin(number, 20)
-
 
 def nextPrime(number: int):
     """
@@ -38,7 +26,7 @@ def nextPrime(number: int):
     Return (int): - a prime number
     """
 
-    while not isPrime(number):
+    while not PrimeTest.isPrime(number):
         number += 2
     return number
 
@@ -54,18 +42,3 @@ def getPrime(bits: int = 1024) -> int:
     number = randomNumber(bits)
 
     return nextPrime(number)
-
-
-def savePrime(p: int, q: int) -> None:
-    """
-    This method is uesd to save two prime number into data\PrimeNumber.txt
-    
-    Parameter:
-		p (int): first prime number
-        q (int): first prime number
-        
-    Return: None
-    """
-    with open("data\PrimeNumber.txt", 'w') as f:
-        f.write(str(p) + '\n')
-        f.write(str(q))

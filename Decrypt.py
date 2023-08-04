@@ -10,7 +10,7 @@ def decypt(cipherText: list[int], privateKey: tuple[int] = ...) -> str:
         privateKey tuple[int]: a pair of number (n, d) 0 private key 
 
     Return: (str) - the decrypted message as a single string.
-    """
+    """    
     n, d = privateKey
     if privateKey == ...:
         try:
