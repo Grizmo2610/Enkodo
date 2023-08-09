@@ -21,7 +21,7 @@ if __name__ == "__main__":
 
     # Decrypt cipher text
     start = time.time()
-    plainText = Decrypt.decypt(cipher, privateKey)
+    plainText = Decrypt.decrypt(cipher, privateKey)
     print('Decrypt time:', time.time() - start)
 
     # Print plaintext

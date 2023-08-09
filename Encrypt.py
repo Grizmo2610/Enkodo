@@ -14,7 +14,8 @@ def encoding(message: str, publicKey: tuple[int] = ...) -> list[int]:
     Return list[int]: list of integers representing the encrypted message.
     """
     if publicKey == ...:
-        publicKey, privateKey= Key.randomKey()
+        print("No public key!")
+        return None
     
     (e, n) = publicKey
     return [pow(ord(char), e, n) for char in message]

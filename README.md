@@ -10,34 +10,38 @@ Sau khi có cặp khóa người sử dụng sẽ dung `public key` để mã h�
 
 - ***Encrypt.py***: Chứa các hàm để mã hóa
     * encoding(message, publicKey): Mã hóa `message` bằng `publicKey`
-    * toText(number): Chuyển số thành một văn bản
-    * crypt(text): Chuyển danh sách chứa các số nguyên thành danh sách chứa đoạn `text` đặc biệt
-    * saveData(text): Lưu dữ liệu vào file có đường dẫn `data\ciphertext.txt`
 
 - ***GetPrime.py***: Chứa các phương thức để sinh ra số nguyên tố ngẫu nhiên có độ dài `bits`
     * randomNumber (bits): Trả về số ngẫu nhiên có độ dài `bits`
     * isPrime(number): Kiểm tra xem số `number` có phải số nguyên tố không?
     * getNumer(bits): Tạo 1 số nguyên tố ngẫu nhiên có độ dài `bits`
-    * savePrime(p, q): cặp số nguyên tố được tạo ngẫu nhiên `p`, `q` vào file `data\PrimeNumber.txt`
     * nextPrime(number): Trả về số nguyên tố lớn hơn gần nhất với `number`
     
 - ***Key.py*** : Chứa các hàm để tạo khóa
     * gcd(a, b): Trả về UCLN của 2 số `a` và `b`
     * generateKey(p, q): Trả về cặp `key`
     * randomKey(bits): Trả về cặp `key` với tham số `p` và `q` lấy ngẫu nhiên với độ dài `bits`.
-    * saveKey(publicKey, privateKey): Lưu các `key` vào trong file `data\key.json`
-    * getKey(path): Trả về cặp `key` được lấy ra từ file có đường dẫn `path`
 
 - ***PrimeTest.py***: Chứa các phương thức kiểm tra xem một số có thể là số nguyên tố không
     *  PRIMES: list[int] - Danh sách một số số nguyên tố nhỏ
-    *  Preprocessor(number): Kiểm tra xem số nguyên `number` có phải số nguyên tố không bằng cách kiểm tra xem số `number` có phải bội của các 
+    *  preprocessor(number): Kiểm tra xem số nguyên `number` có phải số nguyên tố không bằng cách kiểm tra xem số `number` có phải bội của các 
     *  fermat(number, times): Kiểm tra xem số nguyên `number` có phải số nguyên tố không bằng sử dụng thuật toán Fermat với số lần lặp là `times`
     *  check(prime, number, n, s): Hỗ trợ phương thức `millerRobin` kiểm tra xem số `number` có phải số nguyên tố hay không
     *  millerRobin(number, time): kiểm tra xem số `number` có phải số nguyên tố hay không sử dụng thuật toán Miller - Robin
+
 - ***Test.py***: Test chương trình
 
 
 ## Release History
+
+* 0.2.2 - 09 August 2023:
+
+    Xóa các phương thức `GetPrime.savePrime`, `Key.saveKey`, `Key.getKey`, `Encrypt.saveData`, `Encrypt.toText`, `Encrypt.crypt`
+    Đổi lại tên các phương thức `PrimeTest.Preprocessor` thành `PrimeTest.preprocessor`, `Decrypt.decypt` thành `Decrypt.decrypt`
+    Thêm demo phiên bản web
+    Thêm flow chart tại `img\FlowChart.png`
+
+
 * 0.2.1 - 05 May 2023:
 
     Thêm kiểm tra và lấy số nguyên tố gần nhất với p và q khi p và q được truyền vào không phải số nguyên tố

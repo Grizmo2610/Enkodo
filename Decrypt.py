@@ -1,6 +1,4 @@
-import Key
-
-def decypt(cipherText: list[int], privateKey: tuple[int] = ...) -> str:
+def decrypt(cipherText: list[int], privateKey: tuple[int] = ...) -> str:
     """
     This function takes in a list of cipher text and a private key as input and 
     returns the decrypted message as a string.
@@ -11,15 +9,12 @@ def decypt(cipherText: list[int], privateKey: tuple[int] = ...) -> str:
 
     Return: (str) - the decrypted message as a single string.
     """    
-    n, d = privateKey
+    
     if privateKey == ...:
-        try:
-            publicKey, (n, d)= Key.getKey('data\key.json')
-        except:
-            print("No Private key")
-            return None
-
-
+        print("No Private key")
+        return None
+    
+    n, d = privateKey
     result = []
     for char in cipherText:
         result.append(chr(pow(char, d, n)))
