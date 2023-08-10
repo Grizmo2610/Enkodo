@@ -37,7 +37,7 @@
         let publicKey, privateKey;
         // Hàm xử lý khi người dùng nhấn nút Generate Keys
         function generateKeys() {
-            const keySize = 1024;
+            const keySize = 8;
             generateRSAKeyPair(keySize);
             document.getElementById('publicKey').value = "n: " + publicKey.n + "\ne:" + publicKey.e;
             document.getElementById('privateKey').value = "n: " + privateKey.n + "\nd:" + privateKey.d;
@@ -54,7 +54,7 @@
         // Hàm xử lý khi người dùng nhấn nút Encrypt Data
         function encryptData() {
             const inputData = document.getElementById('inputData').value;
-            const encryptedData = encryptRSA(publicKey, inputData);
+            const encryptedData = encrypt(publicKey, inputData);
             document.getElementById('encryptedData').value = encryptedData.join('\n');
         }
 
@@ -63,9 +63,9 @@
             const d = key.d;
             const n = key.n;
             const result = [];
-            const temp = encryptedData.split("\n")
-            for (const char of temp) {
-                const decryptedChar = String.fromCharCode(BigInt(char) ** BigInt(d) % BigInt(n));
+            const data = encryptedData.split("\n")
+            for (const char of data) {
+                const decryptedChar = String.fromCharCode(Number(powerMod(char, d, n)));
                 result.push(decryptedChar);
             }
             return result.join('');
@@ -73,7 +73,7 @@
 
         // Hàm xử lý khi người dùng nhấn nút Decrypt Data
         function decryptData() {
-            const encryptedData = document.getElementById('inputData').value;
+            const encryptedData = document.getElementById('encryptedData').value;
             const decryptedData = decrypt(encryptedData, privateKey);
 
             document.getElementById('decryptedData').value = decryptedData;

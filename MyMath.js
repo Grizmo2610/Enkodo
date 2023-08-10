@@ -1,4 +1,6 @@
 function gcd(a, b) {
+    a = BigInt(a)
+    b = BigInt(b)
     // Tính ước chung lớn nhất (GCD) của hai số a và b
     while (b !== BigInt(0)) {
         const temp = b;
@@ -9,17 +11,20 @@ function gcd(a, b) {
 }
 
 function modInverse(a, m) {
+    a = BigInt(a)
+    m = BigInt(m)
+
     // Tìm nghịch đảo modulo của a trong mod m
     let m0 = m;
-    let x0 = 0;
-    let x1 = 1;
+    let x0 = BigInt(0);
+    let x1 = BigInt(1);
 
     if (m === 1) {
         return 1;
     }
 
     while (a > 1) {
-        const q = Math.floor(a / m);
+        const q =(a / m) / BigInt(1);
         let t = m;
 
         m = a % m;
@@ -29,7 +34,7 @@ function modInverse(a, m) {
         x1 = t;
     }
 
-    if (x1 < 0) {
+    if (x1 < BigInt(0)) {
         x1 += m0;
     }
 
@@ -42,8 +47,8 @@ function powerMod(base, exponent, modulus) {
     exponent = BigInt(exponent)
     modulus = BigInt(modulus)
 
-    if (modulus === 1) 
-        return 0;
+    if (modulus === BigInt(1)) 
+        return BigInt(0);
 
     let result = BigInt(1);
     base = base % modulus;
@@ -55,4 +60,12 @@ function powerMod(base, exponent, modulus) {
         base = (base * base) % modulus;
     }
     return result;
+}
+
+function getRandomIntBetween(a, b) {
+    a = BigInt(a)
+    const timeSeed = new Date().getTime(); // Lấy thời gian hiện tại
+    const randomSeed = (timeSeed % (b - a + BigInt(1))) + a;
+
+    return randomSeed;
 }

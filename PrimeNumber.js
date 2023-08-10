@@ -88,6 +88,7 @@ function preprocessor(number) {
 
 // Hàm kiểm tra số nguyên tố bằng thuật toán Fermat
 function isPrimeFermat(number, iterations) {
+
     for (let i = 0; i < iterations; i++) {
         const a = BigInt(PRIMES[i]); // Chọn a ngẫu nhiên từ 2 đến p-2
         if (powerMod(a, number - BigInt(1), number) !== BigInt(1)) {
@@ -97,39 +98,43 @@ function isPrimeFermat(number, iterations) {
     return true; // p có thể là số nguyên tố
 }
 
-function millerRabin(number, iterations) {
-    // Phân tích p - 1 thành dạng (2^r) * d
-    let r = 0;
-    let d = number - BigInt(2);
-    while (d % BigInt(2) === BigInt(0)) {
-        r++;
-        d /= BigInt(2);
+function check(prime, number, n, s) {
+    let x = BigInt(powerMod(prime, n, number));
+    if (x === BigInt(1)) {
+        return true;
     }
-
-    // Thực hiện kiểm tra với các witness
-    for (let i = 0; i < iterations; i++) {
-        const a = BigInt(PRIMES[i]);
-        let x = BigInt(powerMod(a, d, number));
-        if (x === BigInt(1) || x === number - BigInt(1)) {
-            continue;
+    for (let i = 0; i <= s; i++) {
+        if (x === number - BigInt(1)) {
+            return true;
         }
-        for (let j = 0; j < r - 1; j++) {
-            x = BigInt(powerMod(x, 2, number));
-            if (x === number - BigInt(1)) {
-                break;
-            }
-        }
-        if (x !== number - BigInt(1)) {
-            return false; // p không phải là số nguyên tố
-        }
+        x *= x;
+        x %= BigInt(number);
     }
-    return true; // p có thể là số nguyên tố
-
+    return false;
 }
+
+
+function millerRabin(number, time) {
+    let n = number - BigInt(1);
+    let s = 0;
+    while ((n & BigInt(1)) === BigInt(0)) {
+        n = n >> BigInt(1);
+        s += 1;
+    }
+
+    for (let i = 0; i < time; i++) {
+        const prime = BigInt(PRIMES[i]);
+        if (!check(prime, number, n, s)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 
 // Hàm tìm số nguyên tố kế tiếp lớn hơn number
 function nextPrime(number) {
-    
+
     if (number % BigInt(2) == BigInt(0)) {
         number += BigInt(1);
     }
