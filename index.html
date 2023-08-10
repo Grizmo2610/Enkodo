@@ -6,15 +6,14 @@
 </head>
 
 <body>
-    <h1>Enkodo</h1>
-    <h1>Choose an Option:</h1>
-    
-    <label for="keySize">Select an option:</label>
+    <h1>Enkodo - RSA Encrypting</h1>
+
+    <label for="keySize">Select size of key:</label>
     <select id="keySize">
+        <option value="256">256</option>
         <option value="512">512</option>
         <option value="1024">1024</option>
         <option value="2048">2048</option>
-        <!-- Thêm các tùy chọn khác tại đây -->
     </select>
 
     <button onclick="generateKeys()">Generate Keys</button>
@@ -35,7 +34,7 @@
 
     <br>
     <label for="plaintext">Plain Text:</label>
-    <textarea id="plaintext" rows="7" cols="100"></textarea>
+    <textarea id="plaintext" rows="7" cols="100" maxlength="3500"></textarea>
     <br>
     <button onclick="encryptData()">Encrypt Data</button>
     <button onclick="decryptData()">Decrypt Data</button>
@@ -56,15 +55,15 @@
 
     <script>
         let publicKey, privateKey;
+
         // Hàm xử lý khi người dùng nhấn nút Generate Keys
         function generateKeys() {
-            const keySize = document.getElementById('keySize');
+            const keySize = Number(document.getElementById('keySize').value);
             generateRSAKeyPair(keySize);
             document.getElementById('npublic').value = publicKey.n;
             document.getElementById('e').value = publicKey.e;
             document.getElementById('nprivate').value = privateKey.n;
             document.getElementById('d').value = privateKey.d;
-        
         }
 
         // Hàm mã hóa dữ liệu sử dụng khóa công khai RSA
@@ -77,15 +76,32 @@
 
         let encryptedData
 
+        function getKeys() {
+            n = document.getElementById('npublic').value;
+            e = document.getElementById('e').value;
+            publicKey = {
+                n: n,
+                e: e
+            };
+
+            n = document.getElementById('nprivate').value;
+            d = document.getElementById('d').value;
+            privateKey = {
+                n: n,
+                d: d
+            };
+        }
+
         // Hàm xử lý khi người dùng nhấn nút Encrypt Data
         function encryptData() {
             if (document.getElementById('npublic').value === "" && document.getElementById('e').value === "")
                 generateKeys()
-
+            else {
+                getKeys();
+            }
             const inputData = document.getElementById('plaintext').value;
             encryptedData = encrypt(publicKey, inputData);
-    
-            document.getElementById('encryptedData').value = encodeBase64(encryptedData).join('\n\nx');
+            document.getElementById('encryptedData').value = (encodeBase64(encryptedData)).join('\n\nx');
         }
 
         // Hàm giải mã RSA
@@ -94,24 +110,29 @@
             const n = key.n;
             const result = [];
             const data = encryptedData
-            for (const char of data) {
-                const decryptedChar = String.fromCharCode(Number(powerMod(char, d, n)));
-                result.push(decryptedChar);
+            try {
+                for (const char of data) {
+                    const decryptedChar = String.fromCharCode(Number(powerMod(char, d, n)));
+                    result.push(decryptedChar);
+                }
+                return result.join('');
             }
-            return result.join('');
+            catch (error) {
+                alert("Private key may not suitable with this data!")
+            }
         }
 
         // Hàm xử lý khi người dùng nhấn nút Decrypt Data
         function decryptData() {
-            if (encryptedData === undefined && document.getElementById('encryptedData')){
-                if (document.getElementById('plaintext').value === ""){
+            if (encryptedData === undefined && document.getElementById('encryptedData')) {
+                if (document.getElementById('plaintext').value === "") {
                     alert("Required fields missing.")
                 }
-                else{
+                else {
                     encryptedData = document.getElementById('plaintext').value;
                 }
             }
-            else if (privateKey === undefined){
+            else if (privateKey === undefined) {
                 alert("Required Private Key.")
             }
             const decryptedData = decrypt(encryptedData, privateKey);
