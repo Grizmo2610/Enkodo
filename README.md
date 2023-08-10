@@ -34,6 +34,9 @@ Sau khi có cặp khóa người sử dụng sẽ dung `public key` để mã h�
 
 ## Release History
 
+* 0.2.3 - 10 August 2023:
+    Hoàn thiện demo web với tính năng duy nhất là tạo key tự động
+
 * 0.2.2 - 09 August 2023:
 
     Xóa các phương thức `GetPrime.savePrime`, `Key.saveKey`, `Key.getKey`, `Encrypt.saveData`, `Encrypt.toText`, `Encrypt.crypt`
