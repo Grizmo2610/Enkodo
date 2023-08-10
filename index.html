@@ -2,30 +2,49 @@
 <html>
 
 <head>
-    <title>RSA Encryption</title>
+    <title>Enkodo</title>
 </head>
 
 <body>
     <h1>Enkodo</h1>
+    <h1>Choose an Option:</h1>
+    
+    <label for="keySize">Select an option:</label>
+    <select id="keySize">
+        <option value="512">512</option>
+        <option value="1024">1024</option>
+        <option value="2048">2048</option>
+        <!-- Thêm các tùy chọn khác tại đây -->
+    </select>
+
     <button onclick="generateKeys()">Generate Keys</button>
     <br>
-    <label for="publicKey">Public Key (n, e):</label>
-    <textarea id="publicKey" rows="5" cols="60" readonly></textarea>
+    <label>Public Key</label>
+    <label for="npublic">n:</label>
+    <textarea id="npublic" rows="4" cols="60"></textarea>
+    <label for="e">e:</label>
+    <textarea id="e" rows="4" cols="60"></textarea>
+
     <br>
-    <label for="privateKey">Private Key (n, d):</label>
-    <textarea id="privateKey" rows="5" cols="60" readonly></textarea>
+    <label for="private Key">Private Key</label>
+    <label for="nprivate">n:</label>
+    <textarea id="nprivate" rows="4" cols="60"></textarea>
+
+    <label for="d">d:</label>
+    <textarea id="d" rows="4" cols="60"></textarea>
+
     <br>
-    <label for="inputData">Input Data:</label>
-    <textarea id="inputData" rows="7" cols="60"></textarea>
+    <label for="plaintext">Plain Text:</label>
+    <textarea id="plaintext" rows="7" cols="100"></textarea>
     <br>
     <button onclick="encryptData()">Encrypt Data</button>
     <button onclick="decryptData()">Decrypt Data</button>
     <br>
     <label for="encryptedData">Encrypted Data:</label>
-    <textarea id="encryptedData" rows="7" cols="60" readonly></textarea>
+    <textarea id="encryptedData" rows="10" cols="100"></textarea>
     <br>
     <label for="decryptedData">Decrypted Data:</label>
-    <textarea id="decryptedData" rows="7" cols="60" readonly></textarea>
+    <textarea id="decryptedData" rows="7" cols="100" readonly></textarea>
 
     <script src="PrimeNumber.js"> </script>
 
@@ -33,14 +52,19 @@
 
     <script src="Key.js"></script>
 
+    <script src="Convert.js"></script>
+
     <script>
         let publicKey, privateKey;
         // Hàm xử lý khi người dùng nhấn nút Generate Keys
         function generateKeys() {
-            const keySize = 1024;
+            const keySize = document.getElementById('keySize');
             generateRSAKeyPair(keySize);
-            document.getElementById('publicKey').value = "n: " + publicKey.n + "\ne:" + publicKey.e;
-            document.getElementById('privateKey').value = "n: " + privateKey.n + "\nd:" + privateKey.d;
+            document.getElementById('npublic').value = publicKey.n;
+            document.getElementById('e').value = publicKey.e;
+            document.getElementById('nprivate').value = privateKey.n;
+            document.getElementById('d').value = privateKey.d;
+        
         }
 
         // Hàm mã hóa dữ liệu sử dụng khóa công khai RSA
@@ -51,14 +75,17 @@
             return encryptedData;
         }
 
+        let encryptedData
+
         // Hàm xử lý khi người dùng nhấn nút Encrypt Data
         function encryptData() {
-            if (document.getElementById('publicKey').value === "")
+            if (document.getElementById('npublic').value === "" && document.getElementById('e').value === "")
                 generateKeys()
 
-            const inputData = document.getElementById('inputData').value;
-            const encryptedData = encrypt(publicKey, inputData);
-            document.getElementById('encryptedData').value = encryptedData.join('\n');
+            const inputData = document.getElementById('plaintext').value;
+            encryptedData = encrypt(publicKey, inputData);
+    
+            document.getElementById('encryptedData').value = encodeBase64(encryptedData).join('\n\nx');
         }
 
         // Hàm giải mã RSA
@@ -66,7 +93,7 @@
             const d = key.d;
             const n = key.n;
             const result = [];
-            const data = encryptedData.split("\n")
+            const data = encryptedData
             for (const char of data) {
                 const decryptedChar = String.fromCharCode(Number(powerMod(char, d, n)));
                 result.push(decryptedChar);
@@ -76,30 +103,19 @@
 
         // Hàm xử lý khi người dùng nhấn nút Decrypt Data
         function decryptData() {
-            const encryptedData = document.getElementById('encryptedData').value;
+            if (encryptedData === undefined && document.getElementById('encryptedData')){
+                if (document.getElementById('plaintext').value === ""){
+                    alert("Required fields missing.")
+                }
+                else{
+                    encryptedData = document.getElementById('plaintext').value;
+                }
+            }
+            else if (privateKey === undefined){
+                alert("Required Private Key.")
+            }
             const decryptedData = decrypt(encryptedData, privateKey);
-
             document.getElementById('decryptedData').value = decryptedData;
-        }
-
-        // Hàm chuyển đổi ArrayBuffer sang dạng số nguyên dương hệ thập phân
-        function arrayBufferToDecimal(arrayBuffer) {
-            let decimal = 0;
-            const bytes = new Uint8Array(arrayBuffer);
-            for (let i = 0; i < bytes.length; i++) {
-                decimal = decimal * 256 + bytes[i];
-            }
-            return decimal;
-        }
-
-        // Hàm chuyển đổi dạng số nguyên dương hệ thập phân sang ArrayBuffer
-        function decimalToArrayBuffer(decimal) {
-            const bytes = [];
-            while (decimal > 0) {
-                bytes.unshift(decimal % 256);
-                decimal = Math.floor(decimal / 256);
-            }
-            return new Uint8Array(bytes);
         }
     </script>
 </body>
