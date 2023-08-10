@@ -2,8 +2,8 @@ function generateRSAKeyPair(size) {
     const p = getPrime(size)
     const q = getPrime(size)
 
-    const euler = (p - BigInt(1)) * (q - BigInt(10));
-    const carmichael = euler / gcd(p - BigInt(1), q - BigInt(10));
+    const euler = (p - BigInt(1)) * (q - BigInt(1));
+    const carmichael = euler / gcd(p - BigInt(1), q - BigInt(1));
 
     const n = p * q;
     let e = 65537;

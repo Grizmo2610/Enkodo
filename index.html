@@ -37,7 +37,7 @@
         let publicKey, privateKey;
         // Hàm xử lý khi người dùng nhấn nút Generate Keys
         function generateKeys() {
-            const keySize = 8;
+            const keySize = 1024;
             generateRSAKeyPair(keySize);
             document.getElementById('publicKey').value = "n: " + publicKey.n + "\ne:" + publicKey.e;
             document.getElementById('privateKey').value = "n: " + privateKey.n + "\nd:" + privateKey.d;
@@ -53,6 +53,9 @@
 
         // Hàm xử lý khi người dùng nhấn nút Encrypt Data
         function encryptData() {
+            if (document.getElementById('publicKey').value === "")
+                generateKeys()
+
             const inputData = document.getElementById('inputData').value;
             const encryptedData = encrypt(publicKey, inputData);
             document.getElementById('encryptedData').value = encryptedData.join('\n');
