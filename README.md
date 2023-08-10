@@ -84,6 +84,8 @@ Sau khi có cặp khóa người sử dụng sẽ dung `public key` để mã h�
 
 Hoàng Tuấn Tú – [Facebook| Hoàng Tú](https://www.facebook.com/tuantu2610/) – hoangtuantu893@gmail.com
 
+Nguyễn Thị Hà Phương - [Facebook| Nguyễn Phương](https://www.facebook.com/profile.php?id=100034060476971)
+
 ## Running the tests
 
 Nhập vào 2 số p và q, nếu là số nguyên tố sẽ là nhanh nhất, nếu không phải số nguyên tố thì chương trình sẽ tìm ra số nguyên tố lớn hơn gần nhất với số truyền vào. Truyền đoạn văn bản vào trong file `data\PlainText.txt` sau đó chạy file `Test.py` để mã hóa. Đoạn văn bản được mã hóa sẽ được chuyển thành các số và được lưu trong file `data\ciphertext.txt`
