@@ -1,8 +1,6 @@
 function encode(input) {
     const message = input.toString();
-    const utf8Encoder = new TextEncoder();
-    const data = utf8Encoder.encode(message);
-    return btoa(String.fromCharCode(...data));
+    return btoa(message);
 }
 
 function encodeBase64(data) {
@@ -14,17 +12,21 @@ function encodeBase64(data) {
 }
 
 function convertToDemical(data) {
-    // Chuyển đổi chuỗi Base64 về Uint8Array (mảng các byte)
-    const decodedData = new Uint8Array(atob(data).split('').map(char => char.charCodeAt(0)));
-    // Chuyển Uint8Array thành chuỗi gốc
-    const utf8Decoder = new TextDecoder();
-    return utf8Decoder.decode(decodedData);
+    const encodedBase64 = data.trim()
+    return atob(encodedBase64);
 }
 
 function decodeBase64(data) {
     let result = [];
-    for (const i of data){
-        result.push(BigInt(convertToDemical(i)));
+    try {
+        for (const i of data) {
+            if (i != "") {
+                result.push(BigInt(convertToDemical(i)))
+            };
+        }
+    } catch (error) {
+        alert("Not a suitable base64 data!")
     }
+
     return result;
 }

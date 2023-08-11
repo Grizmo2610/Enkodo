@@ -33,14 +33,15 @@
     <textarea id="d" rows="4" cols="60"></textarea>
 
     <br>
-    <label for="plaintext">Plain Text:</label>
-    <textarea id="plaintext" rows="7" cols="100" maxlength="3500"></textarea>
+    <label for="inputdata">Plain Text:</label>
+    <textarea id="inputdata" rows="7" cols="100" maxlength="3500"></textarea>
     <br>
     <button onclick="encryptData()">Encrypt Data</button>
     <button onclick="decryptData()">Decrypt Data</button>
     <br>
     <label for="encryptedData">Encrypted Data:</label>
-    <textarea id="encryptedData" rows="10" cols="100"></textarea>
+    <textarea id="encryptedData" rows="10" cols="100" readonly></textarea>
+    <button onclick="decyptThisData()">Decrypt this Data</button>
     <br>
     <label for="decryptedData">Decrypted Data:</label>
     <textarea id="decryptedData" rows="7" cols="100" readonly></textarea>
@@ -76,20 +77,27 @@
 
         let encryptedData
 
-        function getKeys() {
+        function publicKeys() {
             n = document.getElementById('npublic').value;
             e = document.getElementById('e').value;
             publicKey = {
                 n: n,
                 e: e
             };
+        }
 
-            n = document.getElementById('nprivate').value;
-            d = document.getElementById('d').value;
+        function privateKeys() {
+            n = BigInt(document.getElementById('nprivate').value);
+            d = BigInt(document.getElementById('d').value);
             privateKey = {
                 n: n,
                 d: d
             };
+        }
+
+        function getKeys() {
+            publicKeys()
+            privateKeys()
         }
 
         // Hàm xử lý khi người dùng nhấn nút Encrypt Data
@@ -99,9 +107,9 @@
             else {
                 getKeys();
             }
-            const inputData = document.getElementById('plaintext').value;
+            const inputData = document.getElementById('inputdata').value;
             encryptedData = encrypt(publicKey, inputData);
-            document.getElementById('encryptedData').value = (encodeBase64(encryptedData)).join('\n\nx');
+            document.getElementById('encryptedData').value = (encodeBase64(encryptedData)).join('\n\n');
         }
 
         // Hàm giải mã RSA
@@ -109,11 +117,10 @@
             const d = key.d;
             const n = key.n;
             const result = [];
-            const data = encryptedData
             try {
-                for (const char of data) {
-                    const decryptedChar = String.fromCharCode(Number(powerMod(char, d, n)));
-                    result.push(decryptedChar);
+                console.log(encryptedData[0])
+                for (const char of encryptedData) {
+                    result.push(String.fromCharCode(Number(powerMod(char, d, n))));
                 }
                 return result.join('');
             }
@@ -122,21 +129,33 @@
             }
         }
 
-        // Hàm xử lý khi người dùng nhấn nút Decrypt Data
-        function decryptData() {
-            if (encryptedData === undefined && document.getElementById('encryptedData')) {
-                if (document.getElementById('plaintext').value === "") {
-                    alert("Required fields missing.")
-                }
-                else {
-                    encryptedData = document.getElementById('plaintext').value;
-                }
+        function decyptThisData() {
+            privateKeys()
+            if (privateKey.n === "" || privateKey.d === "") {
+                alert("Required fields missing.")
             }
-            else if (privateKey === undefined) {
-                alert("Required Private Key.")
-            }
+            encryptedData = decodeBase64((document.getElementById('encryptedData').value).split("\n\n"))
             const decryptedData = decrypt(encryptedData, privateKey);
             document.getElementById('decryptedData').value = decryptedData;
+        }
+
+        function isBase64(inputString) {
+            return (/[a-zA-Z]/.test(inputString) && /\d/.test(inputString)) || /[a-zA-Z]/.test(inputString);
+        }
+
+        // Hàm xử lý khi người dùng nhấn nút Decrypt Data
+        function decryptData() {
+            privateKeys()
+            encryptedData = (document.getElementById('inputdata').value).split("\n");
+            if (privateKey.n === "" || privateKey.d === "" || encryptedData === "") {
+                alert("Required fields missing.")
+            } else {
+                if (isBase64(encryptedData)) {
+                    encryptedData = decodeBase64(encryptedData);
+                }
+                let decryptedData = decrypt(encryptedData, privateKey);
+                document.getElementById('decryptedData').value = decryptedData;
+            }
         }
     </script>
 </body>

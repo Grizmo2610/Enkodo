@@ -40,6 +40,17 @@ Sau khi có cặp khóa người sử dụng sẽ dung `public key` để mã h�
 * 0.2.3 - 10 August 2023:
     Hoàn thiện demo web với tính năng duy nhất là tạo key tự động
 
+    Cho phép người dùng nhập key tương ứng với các tham số n, e, d
+
+    Giờ đây sẽ hiển thị đoạn mã được mã hóa dưới dạng base64
+
+    Có thể mang đoạn mã cùng key ở chỗ khác về để giải mã
+
+    Tách biệt giữa giải mã đoạn đang có ở trong ô `Encrypted Data` và đoạn mã do người dùng nhập ở ô `Plain Text`
+
+    Kiểm tra xem dữ liệu nhập vào có phải là 1 chuỗi số hoặc 1 chuỗi base64 hay không. 
+    
+
 * 0.2.2 - 09 August 2023:
 
     Xóa các phương thức `GetPrime.savePrime`, `Key.saveKey`, `Key.getKey`, `Encrypt.saveData`, `Encrypt.toText`, `Encrypt.crypt`
