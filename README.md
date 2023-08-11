@@ -1,8 +1,8 @@
 # MÃ HÓA RSA
 
-Chương trình tiến hành mã hóa đoạn tiếng anh bằng sử dụng RSA. Người dùng sẽ truyền vào tham số 2 số nguyên tố hoặc 2 số nguyên và chương trình sẽ tìm ra số nguyên tố gần nhất với số đó hoặc cũng có thể truyền vào 1 khoảng và chương trình tìm ngẫu nhiên 2 số nguyên tố trong khoảng để tạo khóa `public key` và `private key`.
+Chương trình tiến hành mã hóa đoạn văn bản sử dụng mật mã RSA. Người dùng có thể lựa chọn giữa việc chọn khóa ngẫu nhiên có độ dài bits tùy chọn hoặc truyền tham số là các số của khóa công khai và khóa bí mật.
 
-Sau khi có cặp khóa người sử dụng sẽ dung `public key` để mã hóa thành các chuỗi số. Người nhận thông điệp sẽ dụng `private key` để giải mã. Nếu khi nhập vào văn bản tiếng việt thì khi giải mã sẽ bị lỗi biên dịch.
+Sau khi có cặp khóa người sử dụng sẽ dung `public key` để mã hóa thành các chuỗi số. Người nhận thông điệp sẽ dụng `private key` để giải mã.
 
 ## How It Work
 - ***Decrypt.py***: Chứa các hàm để giải mã
@@ -30,6 +30,17 @@ Sau khi có cặp khóa người sử dụng sẽ dung `public key` để mã h�
     *  millerRobin(number, time): kiểm tra xem số `number` có phải số nguyên tố hay không sử dụng thuật toán Miller - Robin
 
 - ***Test.py***: Test chương trình
+
+- ***index.html***: Tệp html chứa các đoạn mã để thực hiện việc mã hóa trên web
+
+- ***Convert.js***: Chứa các phương thức để mã hóa và giải mã 1 đoạn văn bản thành base 64
+
+- ***Key.js***: Chứa các phương thức cho việc tạo khóa
+
+- ***MyMath.js***: Các phương thức toán học thực hiện trong chương trình
+
+- ***PrimeNumber.js***: Các phương thức để kiểm tra và sinh số nguyên tố
+
 
 
 ## Release History
