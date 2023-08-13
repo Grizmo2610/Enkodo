@@ -5,10 +5,3 @@ const optionsList = document.querySelector('.select-options');
 selectBox.addEventListener('click', () => {
   optionsList.style.display = optionsList.style.display === 'none' ? 'block' : 'none';
 });
-
-optionsList.addEventListener('click', (event) => {
-  if (event.target.tagName === 'LI') {
-    selectBox.value = event.target.textContent;
-    optionsList.style.display = 'none';
-  }
-});
