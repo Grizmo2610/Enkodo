@@ -1,25 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
   <title>Enkodo</title>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
   <script src="PrimeNumber.js"></script>
   <script src="MyMath.js"></script>
   <script src="Key.js"></script>
   <script src="Convert.js"></script>
+  <script src="script.js"></script>
+
 </head>
+
 <body>
   <header>
     <h1>RSA Encrypting Online</h1>
     <div class="form-group-text">
       <form id="inputdata">
-        <textarea
-          id="inputData"
-          rows="7" cols="100" maxlength="3500"
-          placeholder="Enter plain text"></textarea>
+        <textarea id="inputData" rows="7" cols="100" maxlength="3500" placeholder="Enter plain text"></textarea>
       </form>
     </div>
 
@@ -59,13 +61,11 @@
         <p>Results will be displayed here</p>
       </div>
       <label for="outputString"><strong>Output String: </strong></label>
-      <textarea id="outputString"
-        rows="3" placeholder="Result goes here"
-        name="outputString"></textarea>
+      <textarea id="outputString" rows="3" placeholder="Result goes here" name="outputString" readonly></textarea>
     </div>
   </footer>
 
-  <script src="script.js"></script>
+
   <script>
     let publicKey, privateKey;
 
@@ -77,14 +77,6 @@
       document.getElementById('e').value = publicKey.e;
       document.getElementById('nprivate').value = privateKey.n;
       document.getElementById('d').value = privateKey.d;
-    }
-
-    // Hàm mã hóa dữ liệu sử dụng khóa công khai RSA
-    function encrypt(publicKey, data) {
-      const e = publicKey.e,
-            n = publicKey.n;
-      const encryptedData = data.split('').map(char => powerMod(BigInt(char.charCodeAt(0)), BigInt(e), BigInt(n)));
-      return encryptedData;
     }
 
     function publicKeys() {
@@ -104,6 +96,14 @@
     function getKeys() {
       publicKeys();
       privateKeys();
+    }
+
+    // Hàm mã hóa dữ liệu sử dụng khóa công khai RSA
+    function encrypt(publicKey, data) {
+      const e = publicKey.e,
+        n = publicKey.n;
+      const encryptedData = data.split('').map(char => powerMod(BigInt(char.charCodeAt(0)), BigInt(e), BigInt(n)));
+      return encryptedData;
     }
 
     // Hàm xử lý khi người dùng nhấn nút Encrypt Data
@@ -127,7 +127,7 @@
         for (const char of encryptedData) {
           result.push(String.fromCharCode(Number(powerMod(char, d, n))));
         }
-        return result.join('');
+        return result;
       } catch (error) {
         alert("Private key may not be suitable for this data!");
       }
@@ -136,7 +136,7 @@
     // Hàm xử lý khi người dùng nhấn nút Decrypt Data
     function decryptData() {
       privateKeys();
-      encryptedData = document.getElementById('outputString').value.split("\n");
+      encryptedData = (document.getElementById('inputData').value).split("\n");
       if (privateKey.n === "" || privateKey.d === "" || encryptedData === "") {
         alert("Required fields missing.");
       } else {
@@ -144,7 +144,7 @@
           encryptedData = decodeBase64(encryptedData);
         }
         let decryptedData = decrypt(encryptedData, privateKey);
-        document.getElementById('outputString').value = decryptedData.join('\n');
+        document.getElementById('outputString').value = decryptedData.join("");
       }
     }
 
@@ -153,4 +153,5 @@
     }
   </script>
 </body>
+
 </html>
