@@ -1,163 +1,156 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Enkodo</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Enkodo</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="PrimeNumber.js"></script>
+  <script src="MyMath.js"></script>
+  <script src="Key.js"></script>
+  <script src="Convert.js"></script>
 </head>
-
 <body>
-    <h1>Enkodo - RSA Encrypting</h1>
+  <header>
+    <h1>RSA Encrypting Online</h1>
+    <div class="form-group-text">
+      <form id="inputdata">
+        <textarea
+          id="inputData"
+          rows="7" cols="100" maxlength="3500"
+          placeholder="Enter plain text"></textarea>
+      </form>
+    </div>
 
-    <label for="keySize">Select size of key:</label>
-    <select id="keySize">
-        <option value="256">256</option>
-        <option value="512">512</option>
-        <option value="1024">1024</option>
-        <option value="2048">2048</option>
-    </select>
+    <div class="form-group-select">
+      <label for="keySize">Select RSA Key Size</label>
+      <select id="keySize">
+        <option value="256">256 bit</option>
+        <option value="512">512 bit</option>
+        <option value="1024">1024 bit</option>
+        <option value="2048">2048 bit</option>
+      </select>
+      <button onclick="generateKeys()">Generate Keys</button>
+    </div>
 
-    <button onclick="generateKeys()">Generate Keys</button>
-    <br>
-    <label>Public Key</label>
-    <label for="npublic">n:</label>
-    <textarea id="npublic" rows="4" cols="60"></textarea>
-    <label for="e">e:</label>
-    <textarea id="e" rows="4" cols="60"></textarea>
+    <div class="form-group-key">
+      <label for="public key">Public key</label>
+      <textarea id="npublic" rows="4" cols="60" placeholder="Enter n key"></textarea>
+      <textarea id="e" rows="4" cols="60" placeholder="Enter e key"></textarea>
 
-    <br>
-    <label for="private Key">Private Key</label>
-    <label for="nprivate">n:</label>
-    <textarea id="nprivate" rows="4" cols="60"></textarea>
+      <label for="private key">Private key</label>
+      <textarea id="nprivate" rows="4" cols="60" placeholder="Enter n key"></textarea>
+      <textarea id="d" rows="4" cols="60" placeholder="Enter d key"></textarea>
+    </div>
 
-    <label for="d">d:</label>
-    <textarea id="d" rows="4" cols="60"></textarea>
+    <div class="button-group-1">
+      <button onclick="encryptData()">Encrypt Data</button>
+    </div>
 
-    <br>
-    <label for="inputdata">Plain Text:</label>
-    <textarea id="inputdata" rows="7" cols="100" maxlength="3500"></textarea>
-    <br>
-    <button onclick="encryptData()">Encrypt Data</button>
-    <button onclick="decryptData()">Decrypt Data</button>
-    <br>
-    <label for="encryptedData">Encrypted Data:</label>
-    <textarea id="encryptedData" rows="10" cols="100" readonly></textarea>
-    <button onclick="decyptThisData()">Decrypt this Data</button>
-    <br>
-    <label for="decryptedData">Decrypted Data:</label>
-    <textarea id="decryptedData" rows="7" cols="100" readonly></textarea>
+    <div class="button-group-2">
+      <button onclick="decryptData()">Decrypt Data</button>
+    </div>
+  </header>
 
-    <script src="PrimeNumber.js"> </script>
+  <footer>
+    <div class="form-group">
+      <div id="result" class="container">
+        <p>Results will be displayed here</p>
+      </div>
+      <label for="outputString"><strong>Output String: </strong></label>
+      <textarea id="outputString"
+        rows="3" placeholder="Result goes here"
+        name="outputString"></textarea>
+    </div>
+  </footer>
 
-    <script src="MyMath.js"></script>
+  <script src="script.js"></script>
+  <script>
+    let publicKey, privateKey;
 
-    <script src="Key.js"></script>
+    // Hàm xử lý khi người dùng nhấn nút Generate Keys
+    function generateKeys() {
+      const keySize = Number(document.getElementById('keySize').value);
+      generateRSAKeyPair(keySize);
+      document.getElementById('npublic').value = publicKey.n;
+      document.getElementById('e').value = publicKey.e;
+      document.getElementById('nprivate').value = privateKey.n;
+      document.getElementById('d').value = privateKey.d;
+    }
 
-    <script src="Convert.js"></script>
+    // Hàm mã hóa dữ liệu sử dụng khóa công khai RSA
+    function encrypt(publicKey, data) {
+      const e = publicKey.e,
+            n = publicKey.n;
+      const encryptedData = data.split('').map(char => powerMod(BigInt(char.charCodeAt(0)), BigInt(e), BigInt(n)));
+      return encryptedData;
+    }
 
-    <script>
-        let publicKey, privateKey;
+    function publicKeys() {
+      publicKey = {
+        n: document.getElementById('npublic').value,
+        e: document.getElementById('e').value
+      };
+    }
 
-        // Hàm xử lý khi người dùng nhấn nút Generate Keys
-        function generateKeys() {
-            const keySize = Number(document.getElementById('keySize').value);
-            generateRSAKeyPair(keySize);
-            document.getElementById('npublic').value = publicKey.n;
-            document.getElementById('e').value = publicKey.e;
-            document.getElementById('nprivate').value = privateKey.n;
-            document.getElementById('d').value = privateKey.d;
+    function privateKeys() {
+      privateKey = {
+        n: BigInt(document.getElementById('nprivate').value),
+        d: BigInt(document.getElementById('d').value)
+      };
+    }
+
+    function getKeys() {
+      publicKeys();
+      privateKeys();
+    }
+
+    // Hàm xử lý khi người dùng nhấn nút Encrypt Data
+    function encryptData() {
+      if (document.getElementById('npublic').value === "" && document.getElementById('e').value === "") {
+        generateKeys();
+      } else {
+        getKeys();
+      }
+      const inputData = document.getElementById('inputData').value;
+      encryptedData = encrypt(publicKey, inputData);
+      document.getElementById('outputString').value = encodeBase64(encryptedData).join('\n');
+    }
+
+    // Hàm giải mã RSA
+    function decrypt(encryptedData, key) {
+      const d = key.d;
+      const n = key.n;
+      const result = [];
+      try {
+        for (const char of encryptedData) {
+          result.push(String.fromCharCode(Number(powerMod(char, d, n))));
         }
+        return result.join('');
+      } catch (error) {
+        alert("Private key may not be suitable for this data!");
+      }
+    }
 
-        // Hàm mã hóa dữ liệu sử dụng khóa công khai RSA
-        function encrypt(publicKey, data) {
-            const e = publicKey.e,
-                n = publicKey.n;
-            const encryptedData = data.split('').map(char => powerMod(BigInt(char.charCodeAt(0)), BigInt(e), BigInt(n)));
-            return encryptedData;
+    // Hàm xử lý khi người dùng nhấn nút Decrypt Data
+    function decryptData() {
+      privateKeys();
+      encryptedData = document.getElementById('outputString').value.split("\n");
+      if (privateKey.n === "" || privateKey.d === "" || encryptedData === "") {
+        alert("Required fields missing.");
+      } else {
+        if (isBase64(encryptedData)) {
+          encryptedData = decodeBase64(encryptedData);
         }
+        let decryptedData = decrypt(encryptedData, privateKey);
+        document.getElementById('outputString').value = decryptedData.join('\n');
+      }
+    }
 
-        let encryptedData
-
-        function publicKeys() {
-            n = document.getElementById('npublic').value;
-            e = document.getElementById('e').value;
-            publicKey = {
-                n: n,
-                e: e
-            };
-        }
-
-        function privateKeys() {
-            n = BigInt(document.getElementById('nprivate').value);
-            d = BigInt(document.getElementById('d').value);
-            privateKey = {
-                n: n,
-                d: d
-            };
-        }
-
-        function getKeys() {
-            publicKeys()
-            privateKeys()
-        }
-
-        // Hàm xử lý khi người dùng nhấn nút Encrypt Data
-        function encryptData() {
-            if (document.getElementById('npublic').value === "" && document.getElementById('e').value === "")
-                generateKeys()
-            else {
-                getKeys();
-            }
-            const inputData = document.getElementById('inputdata').value;
-            encryptedData = encrypt(publicKey, inputData);
-            document.getElementById('encryptedData').value = (encodeBase64(encryptedData)).join('\n\n');
-        }
-
-        // Hàm giải mã RSA
-        function decrypt(encryptedData, key) {
-            const d = key.d;
-            const n = key.n;
-            const result = [];
-            try {
-                console.log(encryptedData[0])
-                for (const char of encryptedData) {
-                    result.push(String.fromCharCode(Number(powerMod(char, d, n))));
-                }
-                return result.join('');
-            }
-            catch (error) {
-                alert("Private key may not suitable with this data!")
-            }
-        }
-
-        function decyptThisData() {
-            privateKeys()
-            if (privateKey.n === "" || privateKey.d === "") {
-                alert("Required fields missing.")
-            }
-            encryptedData = decodeBase64((document.getElementById('encryptedData').value).split("\n\n"))
-            const decryptedData = decrypt(encryptedData, privateKey);
-            document.getElementById('decryptedData').value = decryptedData;
-        }
-
-        function isBase64(inputString) {
-            return (/[a-zA-Z]/.test(inputString) && /\d/.test(inputString)) || /[a-zA-Z]/.test(inputString);
-        }
-
-        // Hàm xử lý khi người dùng nhấn nút Decrypt Data
-        function decryptData() {
-            privateKeys()
-            encryptedData = (document.getElementById('inputdata').value).split("\n");
-            if (privateKey.n === "" || privateKey.d === "" || encryptedData === "") {
-                alert("Required fields missing.")
-            } else {
-                if (isBase64(encryptedData)) {
-                    encryptedData = decodeBase64(encryptedData);
-                }
-                let decryptedData = decrypt(encryptedData, privateKey);
-                document.getElementById('decryptedData').value = decryptedData;
-            }
-        }
-    </script>
+    function isBase64(inputString) {
+      return (/[a-zA-Z]/.test(inputString) && /\d/.test(inputString)) || /[a-zA-Z]/.test(inputString);
+    }
+  </script>
 </body>
-
 </html>
