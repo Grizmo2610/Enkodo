@@ -3,12 +3,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap');
 
 :root {
-  --main-color: #3B9B76;
-  --secondary-color: #5AB193;
-  --text-color: rgba(255, 255, 255, 0.87);
-  --select-color: #c0392b;
+  --main-color: #454bc3;
+  --secondary-color: #0612f9;
+  --select-color: #d5d0d0;
 }
-
 
 * {
   box-sizing: border-box;
@@ -17,11 +15,12 @@
 body {
   font-family: "Rubik", sans-serif;
   margin: 0;
+  height: 100%;
 }
 
 header {
   background: #040404 url('https://i.pinimg.com/564x/cb/50/f4/cb50f45e7db240c81b77efd6e3973b54.jpg') no-repeat center center/cover;
-  color: rgba(255,255,255,0.95);
+  color: rgba(255, 255, 255, 0.95);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,44 +37,55 @@ header::after {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.8);
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 header * {
   z-index: 1;
 }
 
-header h1 {
-  margin: 0 0 2rem;
+h1 {
+  margin: 1 0 2rem;
+  color: #040404;
+  display: flex;
+  justify-content: center;
 }
 
-header textarea {
+textarea {
   border: 0;
-  border-radius: 40px;
+  border-radius: 10px;
   font-size: 1rem;
   width: 90%;
   text-align: left;
-  padding: 0.7rem 2rem; 
-  resize: vertical; 
-  min-height: 100px; 
+  padding: 0.7rem 2rem;
+  resize: vertical;
   font-family: "Rubik", sans-serif;
+  box-shadow: 0 0 0 1px #d5d0d0;
+  transition: all .3s;
 }
 
-header button {
+textarea:focus {
+  border-color: #4069e6; 
+  outline: none; 
+  box-shadow: 0 0 20px rgba(75, 112, 226, 0.5); 
+}
+
+
+button {
   background-color: var(--main-color);
-  color: rgba(255,255,255,0.95);
+  color: rgba(255, 255, 255, 0.95);
   position: absolute;
   top: 0.1rem;
   right: 0.1rem;
   border: 0;
-  border-radius: 50px;
+  border-radius: 30px;
   font-size: 1rem;
   padding: 0.7rem 1rem;
   margin-top: 30px;
   margin-right: 120px;
 }
 
-header button:hover {
+button:hover {
   background-color: var(--secondary-color);
 }
 
@@ -87,84 +97,152 @@ button:active {
   transform: scale(0.95);
 }
 
-input:focus, button:focus {
+input:focus,
+button:focus {
   outline: none;
 }
 
-.form-group-text{
-  position: relative;
-  width: 35rem;
-  max-width: 90%;
-  margin-left: 40px;
+.encryptContainer {
+  width: 1000px;
+  height: 640px;
+  background: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  float: none !important;
+  display: inline-block !important;
+  box-shadow:
+    10px 10px 10px var(--select-color),
+    -10px -10px 10px #ffffff;
+  margin-top: 35px;
+  text-align: left;
+  min-height: 300px !important;
 }
 
-.form-group-select, .form-group-key, .button-group-1, .button-group-2{
-  position: relative;
-  width: 31.25rem;
-  max-width: 80%;
+.form-encrypt {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-.form-group-select input {
+.form-group-text {
+  flex: 1;
+  padding: 0 20px;
+  box-sizing: border-box;
+  align-items: center;
+}
+
+.form-group-text textarea {
+  border-radius: 10px;
+  width: 500px;
+  height: 400px;
+  margin-top: 50px;
+  margin-right: 20px;
+}
+
+.form-group-key {
+  position: relative;
+  width: 700px;
+  max-width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-self: flex-start;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.form-group-select {
   border: 0;
   border-radius: 50px;
   font-size: 1rem;
-  padding: 1rem 2rem;
   width: 100%;
-}
-
-.form-group-select, .form-group-key {
-  margin-top: 10px;
-  margin-left: 40px;
+  margin-bottom: 10px;
 }
 
 .form-group-select select {
   display: block;
-  margin-top: 10px;
-  border: 0;
-  border-radius: 100px;
+  margin-top: 5px;
+  border-color: #beb9b9;
+  border-radius: 50px;
   font-size: 1rem;
   padding: 0.7rem 2rem;
-  width: 40%;
+  width: 50%;
 }
 
-.form-group-key {
-  display: flex;
-  flex-direction: column;
-  gap: 10px; 
-  margin-left: 30px;
+.form-group-select select:focus {
+  border-color: #4069e6; 
+  outline: none; 
+  box-shadow: 0 0 10px rgba(75, 112, 226, 0.5); 
+}
+
+.form-group-select button {
+  margin-top: 32px;
+  margin-right: 10px;
 }
 
 .form-group-key label {
-  margin-bottom: 2px; 
+  color: #000;
+  margin-top: 5px;
+  margin-bottom: 10px;
 }
 
-.form-group-key input {
-  border: 0;
-  border-radius: 100px;
-  font-size: 1rem;
-  padding: 0.7rem 2rem;
-  width: 40%;
+.form-group-key textarea {
+  width: 100%;
+  height: 80px;
+  margin-top: 5px;
+}
+
+.button-group-1,
+.button-group-2 {
+  position: relative;
+  max-width: 100%;
+  transform: scale(1.15);
+  bottom: 10px;
 }
 
 .button-group-1 {
-  margin-right: 20rem;
+  margin-right: 26rem;
 }
 
 .button-group-2 {
-  margin-left: 2rem;
+  margin-right: 12rem;
 }
 
-.form-group{
+.form-result {
+  background: #040404;
+  color: rgba(255, 255, 255, 0.95);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 0;
+  position: relative;
+  margin-top: -1cm;
+  font-family: "Rubik", sans-serif;
+}
+
+.form-result:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.form-group {
   position: relative;
   width: 31.25rem;
+  height: 25rem;
   max-width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 0.5rem;
-  margin-left: 500px;
-  margin-top: 100px;
+  z-index: 1;
 }
 
 .form-group textarea {
@@ -173,13 +251,17 @@ input:focus, button:focus {
   font-size: 1rem;
   padding: 2rem 2rem;
   width: 100%;
+  height: 300px;
+  width: 600px;
   text-align: left;
-  padding: 1rem 2rem; 
-  resize: vertical; 
-  min-height: 150px; 
-  font-family: "Rubik", sans-serif;
+  padding: 1rem 2rem;
+  resize: vertical;
+  box-shadow: 0 0 0 1px #d5d0d0;
+  transition: all .3s;
 }
 
-.whiteblank {
-  padding: 10%;
+.form-group label {
+  padding: 10px;
+  font-size: 1.3rem;
 }
+
