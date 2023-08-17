@@ -44,6 +44,13 @@ Sau khi có cặp khóa người sử dụng sẽ dung `public key` để mã h�
 
 
 ## Release History
+* 0.2.5 - 17 August 2023:
+    Hoàn thiện giao diện người dùng đơn giản
+
+    Thêm Auto scroll khi người dùng Bấm nút giải mã hoặc mã hóa
+
+    Không cho phép người dùng thay đổi kích thước của các vùng văn bản ngoại trừ phần kết quả hiển thị
+
 * 0.2.4 - 11 August 2023:
     Có thể hiểu và mã hóa đoạn văn bản được ghi vào bằng tiếng việt
 

@@ -48,6 +48,12 @@ function encryptData() {
   const inputData = document.getElementById('inputData').value;
   encryptedData = encrypt(publicKey, inputData);
   document.getElementById('outputString').value = encodeBase64(encryptedData).join('\n');
+
+  // Tự động kéo xuống khi bấm nút
+  const resultDiv = document.getElementById("outputString");
+  resultDiv.scrollIntoView({
+    behavior: "smooth"
+  });
 }
 
 // Hàm giải mã RSA
@@ -78,12 +84,14 @@ function decryptData() {
     let decryptedData = decrypt(encryptedData, privateKey);
     document.getElementById('outputString').value = decryptedData.join("");
   }
+
+  // Tự động kéo xuống khi bấm nút
+  const resultDiv = document.getElementById("outputString");
+  resultDiv.scrollIntoView({
+    behavior: "smooth"
+  });
 }
 
 function isBase64(inputString) {
   return (/[a-zA-Z]/.test(inputString) && /\d/.test(inputString)) || /[a-zA-Z]/.test(inputString);
 }
-
-
-
-
