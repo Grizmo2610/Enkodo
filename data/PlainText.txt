@@ -1,5 +1,0 @@
-MapReduce is a programming model and software framework used for processing and generating large data sets. It was developed by Google in 2004 and is used extensively in big data processing. The basic idea of MapReduce is to split a large data set into smaller subsets and then process each subset in parallel across multiple computers.
-
-The processing is divided into two stages: the map stage and the reduce stage. In the map stage, the input data is split into key-value pairs and processed in parallel across multiple machines. In the reduce stage, the output of the map stage is combined and reduced into a smaller set of key-value pairs. The output of the reduce stage is then the final result of the MapReduce job.
-
-MapReduce is designed to work on large data sets that can be processed in parallel across multiple machines, which makes it suitable for big data processing tasks. It has become a standard tool in the field of data processing and is widely used in industry and academia.
